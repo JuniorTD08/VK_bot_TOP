@@ -14,7 +14,7 @@ for event in longpoll.listen():
         user_message: str = event.text
 
         if user_message.startswith("/hello"):
-            message = "Hello "
+            message = "Пиветствую!!!"
         elif user_message.startswith("/help"):
             message = "Чем могу вам помочь?"
         else:
@@ -22,6 +22,6 @@ for event in longpoll.listen():
 
         vk.messages.send(
             user_id=user_id,
-            message=user_message,
+            message=message,
             random_id=0
         )
