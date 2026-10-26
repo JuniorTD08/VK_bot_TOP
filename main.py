@@ -1,16 +1,20 @@
-# This is a sample Python script.
+from vk_api import VkApi
+from vk_api.longpoll import VkLongPoll, VkEventType
 
-# Press ⌃R to execute it or replace it with your code.
-# Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
+import config
 
+vk_session = VkApi(token=config.VK_API_KEY)
+vk = vk_session.get_api()
+longpoll = VkLongPoll(vk_session)
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press ⌘F8 to toggle the breakpoint.
+for event in longpoll.listen():
+    if event.type == VkEventType.MESSAGE_NEW and event.to_me:
 
+        user_id = event.user_id
+        user_message: str = event.text
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+        vk.messages.send(
+            user_id=user_id,
+            message=user_message,
+            random_id=0
+        )
