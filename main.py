@@ -13,6 +13,13 @@ for event in longpoll.listen():
         user_id = event.user_id
         user_message: str = event.text
 
+        if user_message.startswith("/hello"):
+            message = "Hello "
+        elif user_message.startswith("/help"):
+            message = "Чем могу вам помочь?"
+        else:
+            message = "Я не знаю такую команду!"
+
         vk.messages.send(
             user_id=user_id,
             message=user_message,
