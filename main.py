@@ -2,6 +2,7 @@ from vk_api import VkApi
 from vk_api.longpoll import VkLongPoll, VkEventType
 
 import config
+
 from kinopoisk_API import KinopoiskApi
 
 vk_session = VkApi(token=config.VK_API_KEY)
