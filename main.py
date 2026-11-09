@@ -22,6 +22,11 @@ for event in longpoll.listen():
             message = "Чем могу вам помочь?"
         elif user_message == "/random":
             message = str(kinopisk.random_film())
+        elif user_message.startswith("/search"):
+            film_name = user_message[8:]
+            message = str(kinopisk.search_film(film_name))
+
+
         else:
             message = "Я не знаю такую команду!"
 

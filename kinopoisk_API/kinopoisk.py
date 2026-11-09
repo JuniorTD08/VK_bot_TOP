@@ -2,6 +2,7 @@
 import requests
 
 
+
 class KinopoiskApi:
 
     BASE_URL = "https://kinopoisk.dev/v1.5/movie"
@@ -11,7 +12,7 @@ class KinopoiskApi:
         url = "https://api.poiskkino.dev/v1.5/movie/random"
         response = requests.get(url=url, headers=self.HEADERS)
         film = self.info(data=response.json())
-
+        print(film)
         dict_film = self.info(data=film)
         message = self.text_info(data=dict_film)
         return message
@@ -41,9 +42,17 @@ class KinopoiskApi:
         message = (f"Имя: {data["name"]}\n"
                    f"Год: {data["year"]}\n"
                    f"Описание: {data["disc"]}\n")
+
         return message
 
-
+    def search_film(self, name):
+        url = f"https://api.poiskkino.dev/v1.5/movie/search?page=1&limit=10&query={name}"
+        response = requests.get(url=url, headers=self.HEADERS)
+        print(response.json())
+        film = self.info(response.json()["docs"][0])
+        dict_film = self.info(data=film)
+        message = self.text_info(data=dict_film)
+        return message
 
 
 if __name__ == "__main__":

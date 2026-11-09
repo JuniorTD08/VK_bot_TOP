@@ -1,14 +1,6 @@
-def text_info(data):
-    print(data)
-    message = (f"Имя: {data["name"]}\n"
-               f"Год: {data["year"]}\n"
-               f"Описание: {data["disc"]}\n")
-    return message
+user = "lol kek ol o"
+test = user.split()
+a = test[1:]
 
-film = {
-    "name": "text_1",
-    "year": "text_2",
-    "disc": "text_3"
-}
-
-text_info(text= film)
+b = " ".join(a)
+print(b)
