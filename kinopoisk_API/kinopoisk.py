@@ -13,8 +13,7 @@ class KinopoiskApi:
         response = requests.get(url=url, headers=self.HEADERS)
         film = self.info(data=response.json())
         print(film)
-        dict_film = self.info(data=film)
-        message = self.text_info(data=dict_film)
+        message = self.text_info(data=film)
         return message
 
 
@@ -22,26 +21,29 @@ class KinopoiskApi:
         name = data.get("name", "Не найдено!")
         year = data.get("year", "Год не найден")
         disc = data.get("description", "Не найдено!")
+        poster = data.get("poster", "Не найдено!")
+
+        if isinstance(poster, dict):
+            url = poster.get("url")
+        else:
+            url = poster
 
         film = {
             "name": name,
             "year": year,
             "disc": disc,
+            "url": url,
+
         }
         return film
 
-    def search_films_name(self,name):
-        url = f"https://api.poiskkino.dev/v1.5/movie/search?page=1&limit=10&query={name}"
-        response = requests.get(url=url, headers=self.HEADERS)
-        film = self.info(response.json()["docs"][0])
-
-        return film
 
     def text_info(self, data: dict):
 
         message = (f"Имя: {data["name"]}\n"
                    f"Год: {data["year"]}\n"
-                   f"Описание: {data["disc"]}\n")
+                   f"Описание: {data["disc"]}\n"
+                   f"Cсылка: {data['url']}")
 
         return message
 
@@ -50,11 +52,10 @@ class KinopoiskApi:
         response = requests.get(url=url, headers=self.HEADERS)
         print(response.json())
         film = self.info(response.json()["docs"][0])
-        dict_film = self.info(data=film)
-        message = self.text_info(data=dict_film)
+        message = self.text_info(data=film)
         return message
 
 
 if __name__ == "__main__":
     kinopoisk = KinopoiskApi()
-    print(kinopoisk.search_films_name(name="Batman"))
+    print(kinopoisk.search_film(name="Batman"))
